@@ -1,0 +1,46 @@
+<%- include('../partials/header', { pageTitle: pageTitle }) %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <h2>Master Data Buku Perpustakaan</h2>
+    <a href="/buku/tambah" class="btn btn-primary">+ Tambah Buku Baru</a>
+</div>
+
+<table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: left;">
+    <thead style="background: #f1f5f9;">
+        <tr>
+            <th>ID</th>
+            <th>Judul Buku</th>
+            <th>Penulis</th>
+            <th>Kategori</th>
+            <th>Denda / Hari</th>
+            <th>Stok</th>
+            <th>Tgl Terbit</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if (listBuku.length === 0) { %>
+            <tr><td colspan="8" style="text-align: center;">Belum ada data buku.</td></tr>
+        <% } else { %>
+            <% listBuku.forEach(item => { %>
+                <tr>
+                    <td><%= item.id %></td>
+                    <td><strong><%= item.judul_buku %></strong></td>
+                    <td><%= item.penulis %></td>
+                    <td><%= item.kategori %></td>
+                    <td>Rp <%= Number(item.harga_denda).toLocaleString('id-ID') %></td>
+                    <td><%= item.jumlah_stok %> Eksemplar</td>
+                    <td><%= new Date(item.tanggal_terbit).toISOString().split('T')[0] %></td>
+                    <td>
+                        <a href="/buku/edit/<%= item.id %>" style="color: #0284c7; margin-right: 0.5rem;">Edit</a>
+                        <form action="/buku/hapus/<%= item.id %>" method="POST" style="display: inline;" onsubmit="return confirm('Yakin hapus buku ini?')">
+                            <button type="submit" style="color: #ef4444; background: none; border: none; cursor: pointer; text-decoration: underline;">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        <% } %>
+    </tbody>
+</table>
+
+<%- include('../partials/footer') %>

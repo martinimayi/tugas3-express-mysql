@@ -1,0 +1,43 @@
+<%- include('../partials/header', { pageTitle: pageTitle }) %>
+
+<h2>Edit Data Buku #<%= buku.id %></h2>
+<form action="/buku/edit/<%= buku.id %>" method="POST" style="max-width: 600px;">
+    <div class="form-group">
+        <label>Judul Buku</label>
+        <input type="text" name="judul_buku" value="<%= buku.judul_buku %>" required>
+    </div>
+    <div class="form-group">
+        <label>Penulis</label>
+        <input type="text" name="penulis" value="<%= buku.penulis %>" required>
+    </div>
+    <div class="form-group">
+        <label>Kategori</label>
+        <select name="kategori" required>
+            <option value="Teknologi" <%= buku.kategori === 'Teknologi' ? 'selected' : '' %>>Teknologi</option>
+            <option value="Sains" <%= buku.kategori === 'Sains' ? 'selected' : '' %>>Sains</option>
+            <option value="Fiksi" <%= buku.kategori === 'Fiksi' ? 'selected' : '' %>>Fiksi</option>
+            <option value="Sejarah" <%= buku.kategori === 'Sejarah' ? 'selected' : '' %>>Sejarah</option>
+            <option value="Bisnis" <%= buku.kategori === 'Bisnis' ? 'selected' : '' %>>Bisnis</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Denda / Hari (Rp)</label>
+        <input type="number" name="harga_denda" value="<%= buku.harga_denda %>" min="500" step="500" required>
+    </div>
+    <div class="form-group">
+        <label>Jumlah Stok</label>
+        <input type="number" name="jumlah_stok" value="<%= buku.jumlah_stok %>" min="0" required>
+    </div>
+    <div class="form-group">
+        <label>Tanggal Terbit</label>
+        <input type="date" name="tanggal_terbit" value="<%= new Date(buku.tanggal_terbit).toISOString().split('T')[0] %>" required>
+    </div>
+    <div class="form-group">
+        <label>Deskripsi</label>
+        <textarea name="deskripsi" rows="3"><%= buku.deskripsi %></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Perbarui Perubahan</button>
+    <a href="/buku" class="btn btn-secondary">Batal</a>
+</form>
+
+<%- include('../partials/footer') %>
